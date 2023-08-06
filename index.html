@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PagBounce</title>
+<link rel="icon" href="4x.png" type="image/x-icon">
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0D0D0D;
+    position: relative;
+    user-select: none;
+  }
+
+  .canvas {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+  }
+
+  .pagman-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .counter {
+    font-family: fantasy;
+    font-size: 150px;
+    color: whitesmoke;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-bottom: 10%;
+    transform: translateX(-50%);
+  }
+  .pagman-image {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+  }
+  .pagman-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bounce-animation {
+    animation: bounce 0.4s alternate;
+  }
+  @keyframes bounce {
+    0% {
+      transform: translateY(-20px);
+    }
+    10% {
+      height: 120px;
+      width: 155px;
+    }
+    25% {
+      height: 144px;
+      width: 144px;
+    }
+    50% {
+      height: 144px;
+      width: 144px;
+      transform: translateY(-220px);
+    }
+    75% {
+      height: 144px;
+      width: 144px;
+    }
+    90% {
+      transform: translateY(0px);
+      height: 80px;
+      width: 200px;
+    }
+    100% {
+      transform: translateY(-20px);
+      height: 144px;
+      width: 144px;
+    } 
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="pagman-container">
+      <div class="pagman-image">
+        <img src="4x.png">
+      </div>
+    </div>
+  </div>
+  <div class="counter">0</div>
+  <script>
+    let pagmanImage = document.querySelector('.pagman-image');
+    let animationRunning = false;
+    let counter = 0;
+    let counterElement = document.querySelector('.counter');
+
+    function incrementCounter() {
+      if (!animationRunning) {
+        pagmanImage.classList.add('bounce-animation');
+        animationRunning = true;
+
+        pagmanImage.addEventListener('animationend', function() {
+          pagmanImage.classList.remove('bounce-animation');
+          animationRunning = false;
+        });
+
+        counter++;
+        counterElement.textContent = counter;
+      }
+    }
+
+    document.addEventListener('keydown', function(event) {
+      incrementCounter();
+    });
+
+    document.addEventListener('click', function() {
+      incrementCounter();
+    });
+  </script>
+</body>
+</html>
